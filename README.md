@@ -20,7 +20,7 @@ Just do:
 
 It has some options (type `transcode2H264 -h` to see them), but defaults should work in most cases. Maybe you would like to play with the `-l` option, if you are a perfectionist as myself.
 
-## Options
+### Options
 ```
 Options:
   --version             show program's version number and exit
