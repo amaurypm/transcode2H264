@@ -165,6 +165,9 @@ class Video:
         if self.__ffmpeg_output:
             ffmpeg_output_root=os.path.splitext(self.__ffmpeg_output)[0].replace(self.__ffmpeg_output_postfix,'')
             mkv_output=ffmpeg_output_root+self.__output_postfix+'.mkv'
+            while os.path.isfile(mkv_output):
+                mkv_output = mkv_output.replace(self.__output_postfix, '_' + self.__output_postfix)
+
             if not self.__avlang:
                 self.__avlang = self.__default_avlang
                 
@@ -405,7 +408,7 @@ def run_script():
     initial_time=time.time()
     usage="%prog [options] video_file[s]"
     description="This program transcode video files to H264 and AAC in MKV format. Output files are compatible with computers, Blu-ray and HD-players. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files."
-    version='%prog 3.0.3'
+    version='%prog 3.1.0'
     parser=optparse.OptionParser(usage=usage,description=description,version=version)
     parser.add_option('-p','--preset',default='medium',help='X264 preset [default: %default].')
     parser.add_option('-q','--crf',type=int,default=23,help='CRF value [default: %default]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. Default value results in a nice quality/size ratio. Use crf=18 for transparent (apparent lossless) encoding. CRF values should be in the range of 1 to 50.')
