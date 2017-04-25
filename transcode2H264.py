@@ -98,24 +98,24 @@ class Video:
             self.__find_ext_subtitle()
             self.__find_int_subtitles()
 
-            self.__replace_original=replace_original            
-            self.__default_avlang=avlang
-            self.__default_slang=slang
+            self.__replace_original = replace_original            
+            self.__default_avlang = avlang
+            self.__default_slang = slang
 ##            self.__sub_exts.append(extra_sub_ext)
-            self.__output_postfix=postfix
-            self.__threads=threads
+            self.__output_postfix = postfix
+            self.__threads = threads
             if auto_crop:
                 sys.stdout.write('Finding crop dimensions...')
                 sys.stdout.flush()
                 self.__get_crop_data()
                 
-            self.__transcoding_options_set=True
+            self.__transcoding_options_set = True
             
     def __find_int_subtitles(self):
             n = 1
             in_filename_root,in_filename_ext=os.path.splitext(self.__in_filename)
             if in_filename_ext == '.mkv':
-                for line in os.popen("mkvmerge -i \"%s\" -F verbose-text" % self.__in_filename):
+                for line in os.popen("mkvmerge -i \"{}\" -F verbose-text".format(self.__in_filename)):
                     if 'subtitles' in line:
                         track_id=int(line.strip().split(":")[0].split()[-1])
                         sub_type=line.strip().split('(')[1].split(")")[0]
@@ -129,20 +129,20 @@ class Video:
                             
                         sub_filename = in_filename_root+"_"+str(n)+sub_ext
                             
-                        os.system("mkvextract tracks \"%s\" %d:\"%s\"" % (self.__in_filename, track_id, sub_filename))
-                        
+                        os.system("mkvextract tracks \"{}\" {:d}:\"{}\"".format(self.__in_filename, track_id, sub_filename))
+
                         self.__sub_files.append(sub_filename)
                         self.__slangs[sub_filename] = slang
                         
                         
     def transcode(self):
         if self.__transcoding_options_set:
-            cmd_line='ffmpeg -i \"%s\" -vcodec libx264 -crf %d' % (self.__in_filename, self.__CRF)
+            cmd_line='ffmpeg -i \"{}\" -vcodec libx264 -crf {:d}'.format(self.__in_filename, self.__CRF)
             if self.__crop_data:
-                cmd_line+=' -vf crop=%s' % self.__crop_data
+                cmd_line+=' -vf crop={}'.format(self.__crop_data)
                 
-            cmd_line+=' -acodec aac -ar 48k -ab 192k -strict experimental -sn -threads %d -y \"%s\"' % (self.__threads, self.__ffmpeg_output)
-            sys.stdout.write('> %s\n' % cmd_line)
+            cmd_line+=' -acodec aac -ar 48k -ab 192k -strict experimental -sn -threads {:d} -y \"{}\"'.format(self.__threads, self.__ffmpeg_output)
+            sys.stdout.write('> {}\n'.format(cmd_line))
             exit_code=os.system(cmd_line)
             
             if not exit_code:
@@ -150,7 +150,7 @@ class Video:
                     return False
                 
                 if self.__replace_original:
-                    sys.stderr.write("WARNING: Deleting file %s as commanded with -r option.\nThis file won't be easily recovered.\n" % self.__in_filename)
+                    sys.stderr.write("WARNING: Deleting file {} as commanded with -r option.\nThis file won't be easily recovered.\n".format(self.__in_filename))
                     os.remove(self.__in_filename)
                         
                 return True
@@ -164,7 +164,7 @@ class Video:
             if not self.__avlang:
                 self.__avlang = self.__default_avlang
                 
-            cmd_line="mkvmerge --default-language %s -o \"%s\" \"%s\"" % (self.__avlang,mkv_output,self.__ffmpeg_output)
+            cmd_line="mkvmerge --default-language {} -o \"{}\" \"{}\"".format(self.__avlang, mkv_output, self.__ffmpeg_output)
             if self.__sub_files:
                 for sub_file in self.__sub_files:
                     if sub_file in self.__slangs:
@@ -173,15 +173,15 @@ class Video:
                     else:
                         slang = self.__default_slang
                         
-                    cmd_line+="  --language 0:%s" % slang
+                    cmd_line+="  --language 0:{}".format(slang)
                     self.__find_sub_charset(sub_file)
                     if self.__sub_charsets[sub_file]:
-                        cmd_line+=" --sub-charset 0:%s" % self.__sub_charsets[sub_file]
+                        cmd_line+=" --sub-charset 0:{}".format(self.__sub_charsets[sub_file])
                         
-                    cmd_line+=(" \"%s\" " % sub_file)
+                    cmd_line+=(" \"{}\" ".format(sub_file))
                 
                 
-            sys.stdout.write('> %s\n' % cmd_line)
+            sys.stdout.write('> {}\n'.format(cmd_line))
             exit_status=os.system(cmd_line)
             if not exit_status:
                 os.remove(self.__ffmpeg_output)
@@ -191,7 +191,7 @@ class Video:
         return False
     
     def __find_sub_charset(self, filename):
-        cmd_output=os.popen("file -bi \"%s\" | sed -e 's/.*charset=//'" % filename)
+        cmd_output=os.popen("file -bi \"{}\" | sed -e 's/.*charset=//'".format(filename))
         for line in cmd_output:
             line=line.strip()
             if line:
@@ -220,7 +220,7 @@ class Video:
                     crop_data=crop
                     crop_mode_cont=crop_list.count(crop)
             
-        sys.stdout.write('%s\n' % crop_data)
+        sys.stdout.write('{}\n'.format(crop_data))
         self.__crop_data=crop_data
     
 class Reporter:
@@ -248,7 +248,7 @@ class Reporter:
         if self.__ignored_files:
             print ('== There following files were ignored: ==')
             for filename in self.__ignored_files:
-                print('\t* %s' % filename)
+                print('\t* {}'.format(filename))
                 
             print(75*'=')
             print('\n')
@@ -256,18 +256,18 @@ class Reporter:
         if self.__files_with_error:
             print('== There were errors transcoding the files: ==')
             for filename in self.__files_with_error:
-                print('\t* %s' % filename)
+                print('\t* {}'.format(filename))
                 
             print(75*'=')
             print('\n')
             
         print('==== Final report ====')
-        output='\t %d file' % self.__files_ok_counter
+        output='\t {:d} file'.format(self.__files_ok_counter)
         if self.__files_ok_counter!=1:
             output+='s'
             
         output+=' transcoded OK.\n'
-        output+='\t %d file' % len(self.__files_with_error)
+        output+='\t {:d} file'.format(len(self.__files_with_error))
                     
         if len(self.__files_with_error)!=1:
             output+='s'
@@ -301,7 +301,8 @@ def print_duration(seconds):
     seconds=seconds%60
     
     if days:
-        output+=('%d' % (days))
+        #output+=('%d' % (days))
+        output+=('{:d}'.format(days))
         if days==1:
             output+=' day '
             
@@ -309,7 +310,8 @@ def print_duration(seconds):
             output+=' days '
             
     if hours:
-        output+=('%2d' % (hours))
+        #output+=('%2d' % (hours))
+        output+=('{:2d}'.format(hours))
         if hours==1:
             output+=' hour '
             
@@ -317,7 +319,8 @@ def print_duration(seconds):
             output+=' hours '
             
     if minutes:
-        output+=('%2d' % (minutes))
+        #output+=('%2d' % (minutes))
+        output+=('{:2d}'.format(minutes))
         if minutes==1:
             output+=' minute '
             
@@ -325,7 +328,8 @@ def print_duration(seconds):
             output+=' minutes '
             
     if seconds:
-        output+=('%4.2f' % (seconds))
+        #output+=('%4.2f' % (seconds))
+        output+=('{:4.2f}'.format(seconds))
         if seconds==1:
             output+=' second '
             
@@ -362,7 +366,7 @@ def ass2srt(in_filename):
             ltime_seconds,ltime_mseconds=ltime_seconds.split('.')
             ltime_seconds,ltime_mseconds=int(ltime_seconds),int(ltime_mseconds)*10
             
-            output_line="%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n%s\n\n" % (dialog_counter,ftime_hour,ftime_min,ftime_seconds,ftime_mseconds,ltime_hour,ltime_min,ltime_seconds,ltime_mseconds,dialog)
+            output_line="{:d}\n{:02d}:{:02d}:{:02d},{:03d} --> {:02d}:{:02d}:{:02d},{:03d}\n{}\n\n".format(dialog_counter,ftime_hour,ftime_min,ftime_seconds,ftime_mseconds,ltime_hour,ltime_min,ltime_seconds,ltime_mseconds,dialog)
             out_file.write(output_line)
             
     
@@ -415,10 +419,10 @@ def run_script():
     file_counter=0
     for filename in args:
         file_counter+=1        
-        print('\n==== Transcoding file %d/%d ====' % (file_counter,len(args)))
+        print('\n==== Transcoding file {:d}/{:d} ===='.format(file_counter,len(args)))
         video=Video(filename)
         if not video.is_ok():
-            sys.stderr.write("File %s is not a proper video file.\n" % filename)
+            sys.stderr.write("File {} is not a proper video file.\n".format(filename))
             reporter.add_ignored_file(filename)
             continue
         
@@ -434,7 +438,8 @@ def run_script():
     reporter.print_final_report()
         
     final_time=time.time()
-    print('Work finished in %s.' % print_duration(final_time-initial_time))
+    
+    print('Work finished in {}.'.format(print_duration(final_time-initial_time)))
     print('Exiting OK.')
     
 ## Running the script
