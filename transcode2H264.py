@@ -31,7 +31,8 @@ class Video:
         self.__in_duration=None
         self.__avlang = None        
         self.__CRF=None
-        self.__sub_files=[] # Now a list, for more than one sub files.
+        self.__ext_sub_files=[] # Now a list, for more than one sub files. This files are always kept.
+        self.__int_sub_files=[] # Now a list, for more than one sub files. This files are removed after the script is completed.
         self.__sub_charsets={} # Now a dictionary, with each subfile as a key.
         self.__sub_exts=['.srt','.ass','.ssa','.txt']        
         self.__default_avlang='eng'
@@ -59,6 +60,8 @@ class Video:
                 if ('Audio' in line) and ('Stream' in line):
                     if '(' in line.split(':')[1]:
                         self.__avlang = line.split(':')[1].split('(')[1].strip(')')
+                        if "unk" in self.__avlang.lower() or "und" in self.__avlang.lower():
+                            self.__avlang = None
                     
                 if 'Duration' in line:
                     duration_string=line.split(',')[0].split()[1]
@@ -78,7 +81,7 @@ class Video:
             for subtitle_extension in self.__sub_exts:
                 subtitle_filename=subtitle_filename_root+subtitle_extension
                 if os.path.isfile(subtitle_filename):
-                    self.__sub_files.append(subtitle_filename)
+                    self.__ext_sub_files.append(subtitle_filename)
                     return
 
     def __try_to_convert_sub_to_srt(self):
@@ -90,7 +93,7 @@ class Video:
             
             srt_sub_file=ass2srt(sub_file)
             if srt_sub_file:
-                self.__sub_files.append(srt_sub_file)   
+                self.__int_sub_files.append(srt_sub_file)   
                 
     def set_transcoding_options(self,crf,replace_original,avlang,slang,postfix,threads,auto_crop):
         if self.__in_ok:
@@ -130,8 +133,8 @@ class Video:
                         sub_filename = in_filename_root+"_"+str(n)+sub_ext
                             
                         os.system("mkvextract tracks \"{}\" {:d}:\"{}\"".format(self.__in_filename, track_id, sub_filename))
-
-                        self.__sub_files.append(sub_filename)
+                        
+                        self.__int_sub_files.append(sub_filename)
                         self.__slangs[sub_filename] = slang
                         
                         
@@ -164,9 +167,10 @@ class Video:
             if not self.__avlang:
                 self.__avlang = self.__default_avlang
                 
-            cmd_line="mkvmerge --default-language {} -o \"{}\" \"{}\"".format(self.__avlang, mkv_output, self.__ffmpeg_output)
-            if self.__sub_files:
-                for sub_file in self.__sub_files:
+            cmd_line="mkvmerge --default-language {} -o \"{}\" \"{}\"".format(self.__avlang,mkv_output,self.__ffmpeg_output)
+            sub_files = self.__ext_sub_files + self.__int_sub_files
+            if sub_files:
+                for sub_file in sub_files:
                     if sub_file in self.__slangs:
                         slang = self.__slangs[sub_file]
                         
@@ -222,6 +226,17 @@ class Video:
             
         sys.stdout.write('{}\n'.format(crop_data))
         self.__crop_data=crop_data
+        
+    def __purge_int_sub_files(self):
+        if self.__int_sub_files:
+            for sub_file in self.__int_sub_files:
+                print(_("Removing temporary file '{}'.").format(sub_file))
+                os.remove(sub_file)
+                
+    def clean(self):
+        os.remove(self.__ffmpeg_output)
+        self.__ffmpeg_output = None
+        self.__purge_int_sub_files()
     
 class Reporter:
     """Holds information about the transcoding process and elaborate a final report.
