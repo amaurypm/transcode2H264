@@ -188,10 +188,10 @@ class Video:
             sys.stdout.write('> {}\n'.format(cmd_line))
             exit_status=os.system(cmd_line)
             if not exit_status:
-                os.remove(self.__ffmpeg_output)
-                self.__ffmpeg_output=None
-                return True
-            
+                #os.remove(self.__ffmpeg_output)
+                #self.__ffmpeg_output=None
+                return True        
+        
         return False
     
     def __find_sub_charset(self, filename):
@@ -230,10 +230,11 @@ class Video:
     def __purge_int_sub_files(self):
         if self.__int_sub_files:
             for sub_file in self.__int_sub_files:
-                print(_("Removing temporary file '{}'.").format(sub_file))
+                print("Removing temporary file '{}'.".format(sub_file))
                 os.remove(sub_file)
                 
     def clean(self):
+        print("Removing temporary file '{}'.".format(self.__ffmpeg_output))
         os.remove(self.__ffmpeg_output)
         self.__ffmpeg_output = None
         self.__purge_int_sub_files()
@@ -403,7 +404,7 @@ def run_script():
     initial_time=time.time()
     usage="%prog [options] video_file[s]"
     description="This program transcode video files to H264 and AAC in MKV format. Output files are compatible with computers, Blu-ray and HD-players. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files."
-    version='%prog 3.0.0'
+    version='%prog 3.0.2'
     parser=optparse.OptionParser(usage=usage,description=description,version=version)
     parser.add_option('-p','--preset',default='medium',help='X264 preset [default: %default].')
     parser.add_option('-q','--crf',type=int,default=23,help='CRF value [default: %default]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. Default value results in a nice quality/size ratio. Use crf=18 for transparent (apparent lossless) encoding. CRF values should be in the range of 1 to 50.')
@@ -447,6 +448,8 @@ def run_script():
             
         else:
             reporter.add_file_with_errors(filename)
+
+        video.clean() # Always clean, not only in success, please...
             
         print(75*'=')
             
