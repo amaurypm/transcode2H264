@@ -15,11 +15,12 @@
 ## Importing modules
 import sys
 import os
-import optparse
+#import optparse
 import time
 import random
 import subprocess
 import string
+import argparse
 
 ## Classes
 class Video:
@@ -414,47 +415,43 @@ def run_script():
     """
     check_the_required_programs()
     initial_time=time.time()
-    usage="%prog [options] video_file[s]"
-    description="This program transcode video files to H264 and AAC in MKV format. Output files are compatible with computers, Blu-ray and HD-players. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files."
-    version='%prog 3.1.0'
-    parser=optparse.OptionParser(usage=usage,description=description,version=version)
-    parser.add_option('-p','--preset',default='medium',help='X264 preset [default: %default].')
-    parser.add_option('-q','--crf',type=int,default=23,help='CRF value [default: %default]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. Default value results in a nice quality/size ratio. Use crf=18 for transparent (apparent lossless) encoding. CRF values should be in the range of 1 to 50.')
-    parser.add_option('-r','--replace-original-video-file',action='store_true',default=False,dest='replace',help='If True original video files will be erased after transcoding [default: %default]. WARNING: deleted files can not be easily recovered!')
-##    parser.add_option('-s','--add-subtitle',action='store_true',default=False,help='Add subtitles (softly) in the resulting video files. Subtitles are searched in the same location of the video file and they must have the same name of the video and one of the following extensions (in this order): .srt, .ass, .ssa, .txt. The first subtitle found, if any, is added.[default: %default].')    
-##    parser.add_option('-e','--extra-subtitle-extension',default='',help='If you want to automatically add a (only one) subtitle extension not included in the script defaults.')
-    parser.add_option('-l','--avlang',default='eng',help='Audio and video languages for MKV files obtained [default: %default].')
-    parser.add_option('-L','--slang',default='spa',help='Subtitle language of soft-subbed subtitles [default: %default].')
-    parser.add_option('-x','--filename-postfix',default='_h264',help='Postfix to be added to newly created H.264 video files [default: %default].')
-    parser.add_option('-t','--threads',type=int,default=0,help='Indicates the number of processor cores the script will use. 0 indicates to use as many as possible [default: %default].')
-    parser.add_option('-c','--auto-crop',action='store_true',default=False,help='Autocrop output files [default: %default]. WARNING: Use with caution as some video files has variable width horizontal (and vertical) black bars, in those cases you will probably lose data.')    
+    parser=argparse.ArgumentParser(description="This program transcode video files to H264 and AAC in MKV format. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files.", add_help=False)
+    parser.add_argument('video', nargs='+', help=('Input video file(s).'))
+    parser.add_argument('-h','--help', action='help', help=("Show this help message and exit."))
+    #parser.add_argument('-p', '--preset', default='medium', help=('X264 preset [default: %(default)s].'))
+    parser.add_argument('-q','--crf', type=int, default=23, help=('CRF value [default: %(default)s]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. CRF values should be in the range of 0 to 51. 0 is lossless (and with the biggest file size), 51 is worst possible quality (with the smallest file size) and 18 is visually lossless. Default value results in a nice quality/size ratio.'))
+    parser.add_argument('-r', '--replace-original-video-file', action='store_true', default=False, dest='replace', help=('If set then original video files will be erased after transcoding. WARNING: deleted files can not be easily recovered!'))
+    parser.add_argument('-l','--avlang', default='eng', help=('Default audio language for MKV files obtained (used only if the original stream languages fail to be determined) [default: %(default)s].'))
+    parser.add_argument('-L', '--slang', default='spa', help=('Default subtitle language of soft-subbed subtitles (only used if original subtitle languages fail to be determined) [default: %(default)s].'))
+    parser.add_argument('-x', '--filename-postfix', default='_h264', help=('Postfix to be added to newly created H.264 video files [default: %(default)s].'))
+    parser.add_argument('-t', '--threads', type=int, default=0, help=('Indicates the number of processor cores the script will use. 0 indicates to use as many as possible [default: %(default)s].'))
+    parser.add_argument('-c', '--auto-crop', action='store_true', default=False, help=('Turn on autocrop function. WARNING: Use with caution as some video files has variable width horizontal (and vertical) black bars, in those cases you will probably lose data.')) 
+    parser.add_argument('-v', '--version', action='version', version='3.1.2', help=("Show program's version number and exit.")) # I need to use this explicit help message here (together with setting add_help=False when creating the parser) to be able to proper translate the version help message (when required). All other messages are translated OK, but not this one. With this edit now everything is OK.
     
-    (options,args)=parser.parse_args()
-##    if options.show_devices_and_presets:
-##        show_devices_and_presets()
-##        exit()
+    args=parser.parse_args()
+
+    if args.crf < 0 or args.crf > 51:
+        parser.error('CRF values should be in the range of 0 to 51.')
         
-    if not len(args):
-        parser.error('You need to specify at least one video file.\nSee help (-h, --help) for more options.')
-        
-    if options.crf < 1 or options.crf > 50:
-        parser.error('CRF values should be in the range of 1 to 50.')
-        
-    if options.threads < 0:
-        parser.error('The number of threads must be 0 or possitive.')
-        
+    if args.threads < 0:
+        parser.error('The number of threads must be 0 or positive.')
+
+    #known_presets = ["ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"]
+    #if args.preset not in known_presets:
+    #    parser.error('Unknown preset "{}".\nValid values are:\n\t{}\n'.format(args.preset, '\n\t'.join(known_presets)))
+
     reporter=Reporter()
     file_counter=0
-    for filename in args:
+    for filename in args.video:
         file_counter+=1        
-        print('\n==== Transcoding file {:d}/{:d} ===='.format(file_counter,len(args)))
+        print('\n==== Transcoding file {:d}/{:d} ===='.format(file_counter,len(args.video)))
         video=Video(filename)
         if not video.is_ok():
             sys.stderr.write("File {} is not a proper video file.\n".format(filename))
             reporter.add_ignored_file(filename)
             continue
         
-        video.set_transcoding_options(options.crf,options.replace,options.avlang,options.slang,options.filename_postfix,options.threads,options.auto_crop)
+        video.set_transcoding_options(args.crf,args.replace,args.avlang,args.slang,args.filename_postfix,args.threads,args.auto_crop)
         if video.transcode():
             reporter.count_file_ok()
             
