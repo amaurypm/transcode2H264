@@ -1,0 +1,545 @@
+# Translations template for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-07 15:23-0400\n"
+"PO-Revision-Date: 2017-06-07 15:33-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"X-Generator: Poedit 1.8.12\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: transcode2H264.py:32
+msgid "usage"
+msgstr "uso"
+
+#: transcode2H264.py:33
+msgid "positional arguments"
+msgstr "argumentos posicionales"
+
+#: transcode2H264.py:34
+msgid "optional arguments"
+msgstr "argumentos opcionales"
+
+#: transcode2H264.py:37
+msgid "error"
+msgstr "error"
+
+#: transcode2H264.py:39
+msgid "the following arguments are required"
+msgstr "se requieren los siguientes argumentos"
+
+#: transcode2H264.py:41
+msgid "unrecognized arguments"
+msgstr "argumentos no conocidos"
+
+#: transcode2H264.py:43
+msgid "too few arguments"
+msgstr "muy pocos argumentos"
+
+#: transcode2H264.py:46
+msgid "expected one argument"
+msgstr "se requiere un argumento"
+
+#: transcode2H264.py:145
+msgid "Finding crop dimensions..."
+msgstr "Buscando dimensiones para cortar..."
+
+#: transcode2H264.py:190
+msgid ""
+"WARNING: Deleting file {} as commanded with -r option.\n"
+"This file won't be easily recovered.\n"
+msgstr ""
+"ADVERTENCIA: Borrado el fichero {} tal como se indicó con la opción -r.\n"
+"Este fichero no podrá ser recuperado con facilidad.\n"
+
+#: transcode2H264.py:270 transcode2H264.py:274
+msgid "Removing temporary file '{}'."
+msgstr "Borrando el fichero temporal '{}'."
+
+#: transcode2H264.py:300
+msgid ""
+"\n"
+"==== Transcoding finished ===="
+msgstr ""
+"\n"
+"==== Transcodificación finalizada ===="
+
+#: transcode2H264.py:302
+msgid "== There following files were ignored: =="
+msgstr "== Fueron ignorados los siguientes ficheros: =="
+
+#: transcode2H264.py:310
+msgid "== There were errors transcoding the files: =="
+msgstr "== Hubo errores con los siguientes ficheros: =="
+
+#: transcode2H264.py:317
+msgid "==== Final report ===="
+msgstr "==== Reporte final ===="
+
+#: transcode2H264.py:320 transcode2H264.py:329
+msgid " file"
+msgstr " fichero"
+
+#: transcode2H264.py:323 transcode2H264.py:332
+msgid " files"
+msgstr " ficheros"
+
+#: transcode2H264.py:325
+msgid " transcoded OK.\n"
+msgstr " bien transcodificado(s).\n"
+
+#: transcode2H264.py:334
+msgid " with errors.\n"
+msgstr " con errores.\n"
+
+#: transcode2H264.py:344
+msgid ""
+"ERROR: ffmpeg is not installed in your system.\n"
+"This script can not work properly without it.\n"
+"\n"
+msgstr ""
+"ERROR: ffmpeg no está instalado en su sistema.\n"
+"Este script no funciona sin ffmpeg.\n"
+"\n"
+
+#: transcode2H264.py:348
+msgid ""
+"ERROR: mkvtoolnix is not installed in your system.\n"
+"This script can not work properly without it.\n"
+"\n"
+msgstr ""
+"ERROR: mkvtoolnix no está instalado en su sistema.\n"
+"Este script no puede funcionar sin mkvtoolnix.\n"
+"\n"
+
+#: transcode2H264.py:366
+msgid " day "
+msgstr " día "
+
+#: transcode2H264.py:369
+msgid " days "
+msgstr " días "
+
+#: transcode2H264.py:375
+msgid " hour "
+msgstr " hora "
+
+#: transcode2H264.py:378
+msgid " hours "
+msgstr " horas "
+
+#: transcode2H264.py:384
+msgid " minute "
+msgstr " minuto "
+
+#: transcode2H264.py:387
+msgid " minutes "
+msgstr " minutos "
+
+#: transcode2H264.py:393
+msgid " second "
+msgstr " segundo "
+
+#: transcode2H264.py:396
+msgid " seconds "
+msgstr " segundos "
+
+#: transcode2H264.py:455
+msgid ""
+"This program transcode video files to H264 and AAC in MKV format. Subtitles, "
+"if present, are automatically detected and soft subbed into the "
+"corresponding output files."
+msgstr ""
+"Este programa transcodifica ficheros de video a H264 y AAC en un formato "
+"MKV. Los subtítulos, si hay, son detectados automáticamente e incluidos en "
+"los ficheros de salida correspondientes."
+
+#: transcode2H264.py:456
+msgid "Input video file(s)."
+msgstr "Fichero(s) de video de entrada."
+
+#: transcode2H264.py:457
+msgid "Show this help message and exit."
+msgstr "Muestra este mensaje de ayuda y sale."
+
+#: transcode2H264.py:458
+#, python-format
+msgid "X264 preset [default: %(default)s]."
+msgstr "X264 preset [valor por defecto: %(default)s]."
+
+#: transcode2H264.py:459
+#, python-format
+msgid ""
+"CRF value [default: %(default)s]. Determines the output video quality. "
+"Smaller values gives better qualities and bigger file sizes, bigger values "
+"result in less quality and smaller file sizes. CRF values should be in the "
+"range of 0 to 51. 0 is lossless (and with the biggest file size), 51 is "
+"worst possible quality (with the smallest file size) and 18 is visually "
+"lossless. Default value results in a nice quality/size ratio."
+msgstr ""
+"Valor de CRF [valor por defecto: %(default)s]. Determina la calidad del "
+"video de salida. Con valores más pequeños se obtiene mayor calidad, pero con "
+"mayor tamaño de fichero, valores grandes resultan en menor calidad y menor "
+"tamaño de fichero. Los valores de CRF deben estar en el rango entre 0 y 51. "
+"0 genera un video sin pérdida por compresión (lossless), pero con el mayor "
+"tamaño. 51 genera el video con peor calidad (y el menor tamaño) y 18 genera "
+"un video sin pérdida aparente de calidad. El valor por defecto genera videos "
+"con una buena relación calidad/tamaño."
+
+#: transcode2H264.py:460
+msgid ""
+"If set then original video files will be erased after transcoding. WARNING: "
+"deleted files can not be easily recovered!"
+msgstr ""
+"Si se especifica esta opción los videos originales van a ser borrados "
+"después de terminada la transcodificación. ALERTA: ¡Los videos borrados no "
+"pueden ser recuperados con facilidad!"
+
+#: transcode2H264.py:461
+#, python-format
+msgid ""
+"Default audio language for MKV files obtained (used only if the original "
+"stream languages fail to be determined) [default: %(default)s]."
+msgstr ""
+"Lenguaje por defecto de las pistas de audio en los ficheros MKV generados "
+"(utilizados solo en caso de que no puedan ser determinados de forma "
+"automática los lenguajes originales de estas pistas) [valor por defecto: "
+"%(default)s]."
+
+#: transcode2H264.py:462
+#, python-format
+msgid ""
+"Default subtitle language of soft-subbed subtitles (only used if original "
+"subtitle languages fail to be determined) [default: %(default)s]."
+msgstr ""
+"Lenguaje por defecto de los subtítulos incluidos en el o los ficheros de "
+"salida (utilizado solamente en el caso en que no se pueda determinar el "
+"lenguaje de los subtitulos) [valor por defecto: %(default)s]."
+
+#: transcode2H264.py:463
+#, python-format
+msgid ""
+"Postfix to be added to newly created H.264 video files [default: "
+"%(default)s]."
+msgstr ""
+"Prefijo que se le añade a los ficheros H.264 generados [default: "
+"%(default)s]."
+
+#: transcode2H264.py:464
+#, python-format
+msgid ""
+"Indicates the number of processor cores the script will use. 0 indicates to "
+"use as many as possible [default: %(default)s]."
+msgstr ""
+"Indica el número de núcleos de procesador que el script va a utilizar. El "
+"valor 0 implica utilizar tantos núcleos como sea posible [valor por defecto: "
+"%(default)s]."
+
+#: transcode2H264.py:465
+msgid ""
+"Turn on autocrop function. WARNING: Use with caution as some video files has "
+"variable width horizontal (and vertical) black bars, in those cases you will "
+"probably lose data."
+msgstr ""
+"Enciende la función de recorte automático. ALERTA: Use esta opción con "
+"cautela pues algunos videos poseen barras negras horizontales y/o verticales "
+"de ancho variable y en estos casos probablemente usted pierda información."
+
+#: transcode2H264.py:466
+msgid "Show program's version number and exit."
+msgstr "Muestra la versión del programa y sale."
+
+#: transcode2H264.py:471
+msgid "CRF values should be in the range of 0 to 51."
+msgstr "Los valores de CRF deben estar en el rango entre 0 to 51."
+
+#: transcode2H264.py:474
+msgid "The number of threads must be 0 or positive."
+msgstr "El número de hilos debe ser 0 o positivo."
+
+#: transcode2H264.py:478
+msgid ""
+"Unknown preset \"{}\".\n"
+"Valid values are:\n"
+"\t{}\n"
+msgstr ""
+"preset desconocido \"{}\".\n"
+"Los valores válidos son:\n"
+"\t{}\n"
+
+#: transcode2H264.py:484
+msgid ""
+"\n"
+"==== Transcoding file {:d}/{:d} ===="
+msgstr ""
+"\n"
+"==== Transcodificando el fichero {:d}/{:d} ===="
+
+#: transcode2H264.py:487
+msgid "File {} is not a proper video file.\n"
+msgstr "El fichero {} no es un archivo de video.\n"
+
+#: transcode2H264.py:506
+msgid "Work finished in {}."
+msgstr "Trabajo finalizado en {}."
+
+#: transcode2H264.py:507
+msgid "Exiting OK."
+msgstr "Finalizando OK."
+
+#~ msgid ""
+#~ "This program transcode video files to H265 and AAC in MKV format. "
+#~ "Subtitles, if present, are automatically detected and soft subbed into "
+#~ "the corresponding output files."
+#~ msgstr ""
+#~ "Este programa transcodifica ficheros de video a H265 y AAC en un "
+#~ "contenedor MKV. Los subtítulos, si están presentes, son detectados e "
+#~ "incluidos en los ficheros de salida."
+
+#~ msgid "X265 preset [default: %(default)s]."
+#~ msgstr "X265 preset [valor por defecto: %(default)s]."
+
+#~ msgid ""
+#~ "CRF value [default: %(default)s]. Determines the output video quality. "
+#~ "Smaller values gives better qualities and bigger file sizes, bigger "
+#~ "values result in less quality and smaller file sizes. Default value "
+#~ "results in a nice quality/size ratio. CRF values should be in the range "
+#~ "of 1 to 50."
+#~ msgstr ""
+#~ "Valor de CRF [valor por defecto: %(default)s]. Determina la calidad del "
+#~ "video de salida. Valores pequeños resultan en una mejor calidad y un "
+#~ "mayor tamaño de ficheros, mientras que valores grandes resultan en una "
+#~ "peor calidad y menor tamaño de fichero. El valor por defecto genera "
+#~ "videos de una buena relación calidad/tamaño. El rango de valores "
+#~ "permitidos para CRF está entre 1 y 50."
+
+#~ msgid ""
+#~ "Postfix to be added to newly created H.265 video files [default: "
+#~ "%(default)s]."
+#~ msgstr ""
+#~ "Sufijo añadido a los nuevos videos H.265 generados [valor por defecto: "
+#~ "%(default)s]."
+
+#~ msgid "CRF values should be in the range of 1 to 50."
+#~ msgstr "CRF solamente puede tomar valores entre 1 y 50."
+
+#~ msgid "files"
+#~ msgstr " ficheros"
+
+#~ msgid "\t {} file"
+#~ msgstr "\t {} fichero"
+
+#~ msgid "\t {:d} file"
+#~ msgstr "\t {:d} fichero"
+
+#~ msgid "Input video file(s)"
+#~ msgstr "Fichero(s) de video de entrada"
+
+#~ msgid "show this help message and exit"
+#~ msgstr "muestra este mensaje de ayuda y sale"
+
+#~ msgid ""
+#~ "If True original video files will be erased after transcoding [default: "
+#~ "%(default)s]. WARNING: deleted files can not be easily recovered!"
+#~ msgstr ""
+#~ "Si True (verdadero) los videos de origen van a ser eliminados luego de "
+#~ "una transcodificación exitosa [valor por defecto: %(default)s]. "
+#~ "¡ADVERTENCIA: los ficheros eliminados no pueden ser recuperados con "
+#~ "facilidad!"
+
+#~ msgid ""
+#~ "Autocrop output files [default: %(default)s]. WARNING: Use with caution "
+#~ "as some video files has variable width horizontal (and vertical) black "
+#~ "bars, in those cases you will probably lose data."
+#~ msgstr ""
+#~ "Autorecortar ficheros de salida [valor por defecto: %(default)s]. "
+#~ "ADVERTENCIA: Esta opción debe de ser utilizada con cautela pues algunos "
+#~ "videos tienen barras negras horizontales (y/o verticales) de ancho "
+#~ "variable, y en esos casos usted puede perder información del video."
+
+#~ msgid "show program's version number and exit"
+#~ msgstr "muestra la versión del programa y sale"
+
+#~ msgid "show program version number and exit"
+#~ msgstr "muestra la versión del programa y sale"
+
+#~ msgid "version number and exit"
+#~ msgstr "número de versión y sale"
+
+#~ msgid "positional arguments:"
+#~ msgstr "argumentos posicionales:"
+
+#~ msgid "optional arguments:"
+#~ msgstr "argumentos opcionales:"
+
+#~ msgid "error:"
+#~ msgstr "error:"
+
+#~ msgid "the following arguments are required:"
+#~ msgstr "son requeridos los siguientes argumentos:"
+
+#~ msgid "%prog [options] video_file[s]"
+#~ msgstr "%prog [opciones] video[s]"
+
+#~ msgid "X265 preset [default: %default]."
+#~ msgstr "X265 preset [valor por defecto: %default]."
+
+#~ msgid ""
+#~ "CRF value [default: %default]. Determines the output video quality. "
+#~ "Smaller values gives better qualities and bigger file sizes, bigger "
+#~ "values result in less quality and smaller file sizes. Default value "
+#~ "results in a nice quality/size ratio. CRF values should be in the range "
+#~ "of 1 to 50."
+#~ msgstr ""
+#~ "Valor de CRF [valor por defecto: %default]. Determina la calidad del "
+#~ "video de salida. Valores pequeños resultan en una mejor calidad y un "
+#~ "mayor tamaño de ficheros, mientras que valores grandes resultan en una "
+#~ "peor calidad y menor tamaño de fichero. El valor por defecto genera "
+#~ "videos de una buena relación calidad/tamaño. El rango de valores "
+#~ "permitidos para CRF está entre 1 y 50."
+
+#~ msgid ""
+#~ "If True original video files will be erased after transcoding [default: "
+#~ "%default]. WARNING: deleted files can not be easily recovered!"
+#~ msgstr ""
+#~ "Si True (verdadero) los videos de origen van a ser eliminados luego de "
+#~ "una transcodificación exitosa [valor por defecto: %default]. "
+#~ "¡ADVERTENCIA: los ficheros eliminados no pueden ser recuperados con "
+#~ "facilidad!"
+
+#~ msgid ""
+#~ "Default audio language for MKV files obtained (used only if the original "
+#~ "stream languages fail to be determined) [default: %default]."
+#~ msgstr ""
+#~ "Lenguajes por defecto de las pistas de audio en los ficheros MKV "
+#~ "generados (utilizados solo en caso de que no puedan ser determinados de "
+#~ "forma automática los lenguajes originales de estas pistas) [valor por "
+#~ "defecto: %default]."
+
+#~ msgid ""
+#~ "Default subtitle language of soft-subbed subtitles (only used if original "
+#~ "subtitle languages fail to be determined) [default: %default]."
+#~ msgstr ""
+#~ "Lenguaje por defecto de los subtítulos incluidos en el o los ficheros de "
+#~ "salida [valor por defecto: %default]."
+
+#~ msgid ""
+#~ "Postfix to be added to newly created H.265 video files [default: "
+#~ "%default]."
+#~ msgstr ""
+#~ "Sufijo añadido a los nuevos videos H.265 generados [valor por defecto: "
+#~ "%default]."
+
+#~ msgid ""
+#~ "Indicates the number of processor cores the script will use. 0 indicates "
+#~ "to use as many as possible [default: %default]."
+#~ msgstr ""
+#~ "Indica el número de núcleos de procesador que el script va a utilizar. El "
+#~ "valor 0 implica utilizar tantos núcleos como sea posible [valor por "
+#~ "defecto: %default]."
+
+#~ msgid ""
+#~ "Autocrop output files [default: %default]. WARNING: Use with caution as "
+#~ "some video files has variable width horizontal (and vertical) black bars, "
+#~ "in those cases you will probably lose data."
+#~ msgstr ""
+#~ "Autorecortar ficheros de salida [valor por defecto: %default]. "
+#~ "ADVERTENCIA: Esta opción debe de ser utilizada con cautela pues algunos "
+#~ "videos tienen barras negras horizontales (y/o verticales) de ancho "
+#~ "variable, y en esos casos usted puede perder información del video."
+
+#~ msgid ""
+#~ "You need to specify at least one video file.\n"
+#~ "See help (-h, --help) for more options."
+#~ msgstr ""
+#~ "Necesitas especificar al menor un fichero de video.\n"
+#~ "Vea la ayuda (-h, --help) para más opciones."
+
+#~ msgid "Removing temporary file '{}'"
+#~ msgstr "Borrando el fichero temporal '{}'"
+
+#~ msgid "Removing temporary file {}"
+#~ msgstr "Borrando el fichero temporal {}"
+
+#~ msgid ""
+#~ "Default audio and video languages for MKV files obtained (used only if "
+#~ "the original stream languages fail to be determined) [default: %default]."
+#~ msgstr ""
+#~ "Lenguajes por defecto de las pistas de audio y video en los ficheros MKV "
+#~ "generados (utilizados solo en caso de que no puedan ser determinados de "
+#~ "forma automática los lenguajes originales de estas pistas) [valor por "
+#~ "defecto: %default]."
+
+#~ msgid ""
+#~ "WARNING: Deleting file %s as commanded with -r option.\n"
+#~ "This file won't be easily recovered.\n"
+#~ msgstr ""
+#~ "ADVERTENCIA: Borrado el fichero %s tal como se indicó con la opción -r.\n"
+#~ "Este fichero no podrá ser recuperado con facilidad.\n"
+
+#~ msgid "\t %d file"
+#~ msgstr "\t %d fichero"
+
+#~ msgid ""
+#~ "\n"
+#~ "==== Transcoding file %d/%d ===="
+#~ msgstr ""
+#~ "\n"
+#~ "==== Transcodificando el fichero %d/%d ===="
+
+#~ msgid "File %s is not a proper video file.\n"
+#~ msgstr "El fichero %s no es un archivo de video.\n"
+
+#~ msgid "Work finished in %s."
+#~ msgstr "Trabajo terminado en %s."
+
+#~ msgid ""
+#~ "ERROR: ffmpeg is not installed in your system.\n"
+#~ "This script can not work properly without it.\n"
+#~ "If you are using Ubuntu just type:\n"
+#~ "\tsudo apt-get install ffmpeg\n"
+#~ "\n"
+#~ msgstr ""
+#~ "ERROR: ffmpeg no está instalado en su sistema.\n"
+#~ "Este script no funciona sin ffmpeg.\n"
+#~ "Si estás usando Ubuntu puede instalarlo así:\n"
+#~ "\tsudo apt-get install ffmpeg\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "ERROR: mkvtoolnix is not installed in your system.\n"
+#~ "This script can not work properly without it.\n"
+#~ "If you are using Ubuntu just type:\n"
+#~ "\tsudo apt-get install mkvtoolnix\n"
+#~ "\n"
+#~ msgstr ""
+#~ "ERROR: mkvtoolnix no está instalado en su sistema.\n"
+#~ "Este script no funciona sin mkvtoolnix.\n"
+#~ "Si usa Ubuntu puede instalarlo así:\n"
+#~ "\tsudo apt-get install mkvtoolnix\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This program transcode video files to H265 and AAC in MKV format. Output "
+#~ "files are compatible with computers, Blu-ray and HD-players. Subtitles, "
+#~ "if present, are automatically detected and soft subbed into the "
+#~ "corresponding output files."
+#~ msgstr ""
+#~ "Este programa transcodifica ficheros de vídeo a H265 y AAC, en "
+#~ "contenedores MKV. Los videos resultantes pueden ser reproducidos en "
+#~ "computadoras. Blu-ray y HD-players. Si existen subtítulos estos son "
+#~ "tomados en cuenta y añadidos en los ficheros MKV resultantes."
+
+#~ msgid "The number of threads must be 0 or possitive."
+#~ msgstr "El número de hilos debe de ser 0 o positivo."

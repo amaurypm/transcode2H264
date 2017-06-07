@@ -18,8 +18,38 @@ import os
 import time
 import random
 import subprocess
+import gettext
 import string
-import argparse
+
+## Setting internationalization
+localedir = os.path.join(os.path.abspath(os.path.dirname(os.path.realpath(__file__))), 'locale')
+
+translate = gettext.translation('transcode2H264', localedir, fallback=True)
+
+_ = translate.gettext
+
+def i18n_text_argparse(text):
+    text = text.replace("usage", _("usage"))
+    text = text.replace("positional arguments", _("positional arguments"))
+    text = text.replace("optional arguments", _("optional arguments"))
+    #text = text.replace("show this help message and exit",
+    #                    _("show this help message and exit"))
+    text = text.replace("error", _("error"))
+    text = text.replace("the following arguments are required",
+                        _("the following arguments are required"))
+    text = text.replace("unrecognized arguments",
+                        _("unrecognized arguments"))
+    text = text.replace("too few arguments",
+                        _("too few arguments"))
+    #text = text.replace("show program's version number and exit", 
+    #        _("show program's version number and exit")) # Internationalization does not work with this message. I don't know why.
+    text = text.replace("expected one argument",_("expected one argument"))
+    return text
+
+gettext.gettext = i18n_text_argparse
+
+import argparse ## Need to be imported after the previous declarations, to allow argparse text be translated.
+
 
 ## Classes
 class Video:
@@ -112,7 +142,7 @@ class Video:
             self.__output_postfix = postfix
             self.__threads = threads
             if auto_crop:
-                sys.stdout.write('Finding crop dimensions...')
+                sys.stdout.write(_('Finding crop dimensions...'))
                 sys.stdout.flush()
                 self.__get_crop_data()
                 
@@ -157,7 +187,7 @@ class Video:
                     return False
                 
                 if self.__replace_original:
-                    sys.stderr.write("WARNING: Deleting file {} as commanded with -r option.\nThis file won't be easily recovered.\n".format(self.__in_filename))
+                    sys.stderr.write(_("WARNING: Deleting file {} as commanded with -r option.\nThis file won't be easily recovered.\n").format(self.__in_filename))
                     os.remove(self.__in_filename)
                         
                 return True
@@ -237,11 +267,11 @@ class Video:
     def __purge_int_sub_files(self):
         if self.__int_sub_files:
             for sub_file in self.__int_sub_files:
-                print("Removing temporary file '{}'.".format(sub_file))
+                print(_("Removing temporary file '{}'.").format(sub_file))
                 os.remove(sub_file)
                 
     def clean(self):
-        print("Removing temporary file '{}'.".format(self.__ffmpeg_output))
+        print(_("Removing temporary file '{}'.").format(self.__ffmpeg_output))
         os.remove(self.__ffmpeg_output)
         self.__ffmpeg_output = None
         self.__purge_int_sub_files()
@@ -267,9 +297,9 @@ class Reporter:
     def print_final_report(self):
         """Print report after all transcoding is made.
         """
-        print('\n==== Transcoding finished ====')
+        print(_('\n==== Transcoding finished ===='))
         if self.__ignored_files:
-            print ('== There following files were ignored: ==')
+            print (_('== There following files were ignored: =='))
             for filename in self.__ignored_files:
                 print('\t* {}'.format(filename))
                 
@@ -277,25 +307,31 @@ class Reporter:
             print('\n')
             
         if self.__files_with_error:
-            print('== There were errors transcoding the files: ==')
+            print(_('== There were errors transcoding the files: =='))
             for filename in self.__files_with_error:
                 print('\t* {}'.format(filename))
                 
             print(75*'=')
             print('\n')
             
-        print('==== Final report ====')
-        output='\t {:d} file'.format(self.__files_ok_counter)
-        if self.__files_ok_counter!=1:
-            output+='s'
+        print(_('==== Final report ===='))
+        output = '\t {}'.format(self.__files_ok_counter)
+        if self.__files_ok_counter == 1:
+            output += _(' file')
+
+        else:
+            output += _(' files')
             
-        output+=' transcoded OK.\n'
-        output+='\t {:d} file'.format(len(self.__files_with_error))
+        output += _(' transcoded OK.\n')
+        output += '\t {:d}'.format(len(self.__files_with_error))
                     
-        if len(self.__files_with_error)!=1:
-            output+='s'
+        if len(self.__files_with_error) == 1:
+            output += _(' file')
+
+        else:
+            output += _(' files')
             
-        output+=' with errors.\n'
+        output+=_(' with errors.\n')
         
         sys.stdout.write(output)
             
@@ -305,11 +341,11 @@ class Reporter:
 ## Functions
 def check_the_required_programs():
     if os.system("ffmpeg -h > /dev/null 2>&1"):
-        sys.stderr.write("ERROR: ffmpeg is not installed in your system.\nThis script can not work properly without it.\nIf you are using Ubuntu just type:\n\tsudo apt-get install ffmpeg\n\n")
+        sys.stderr.write(_("ERROR: ffmpeg is not installed in your system.\nThis script can not work properly without it.\n\n"))
         exit()
         
     if os.system("mkvmerge -h > /dev/null"):
-        sys.stderr.write("ERROR: mkvtoolnix is not installed in your system.\nThis script can not work properly without it.\nIf you are using Ubuntu just type:\n\tsudo apt-get install mkvtoolnix\n\n")
+        sys.stderr.write(_("ERROR: mkvtoolnix is not installed in your system.\nThis script can not work properly without it.\n\n"))
         exit()
         
 def print_duration(seconds):
@@ -327,37 +363,37 @@ def print_duration(seconds):
         #output+=('%d' % (days))
         output+=('{:d}'.format(days))
         if days==1:
-            output+=' day '
+            output+=_(' day ')
             
         else:
-            output+=' days '
+            output+=_(' days ')
             
     if hours:
         #output+=('%2d' % (hours))
         output+=('{:2d}'.format(hours))
         if hours==1:
-            output+=' hour '
+            output+=_(' hour ')
             
         else:
-            output+=' hours '
+            output+=_(' hours ')
             
     if minutes:
         #output+=('%2d' % (minutes))
         output+=('{:2d}'.format(minutes))
         if minutes==1:
-            output+=' minute '
+            output+=_(' minute ')
             
         else:
-            output+=' minutes '
+            output+=_(' minutes ')
             
     if seconds:
         #output+=('%4.2f' % (seconds))
         output+=('{:4.2f}'.format(seconds))
         if seconds==1:
-            output+=' second '
+            output+=_(' second ')
             
         else:
-            output+=' seconds '
+            output+=_(' seconds ')
                 
     return output.strip()
 
@@ -416,39 +452,39 @@ def run_script():
     """
     check_the_required_programs()
     initial_time=time.time()
-    parser=argparse.ArgumentParser(description="This program transcode video files to H264 and AAC in MKV format. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files.", add_help=False)
-    parser.add_argument('video', nargs='+', help=('Input video file(s).'))
-    parser.add_argument('-h','--help', action='help', help=("Show this help message and exit."))
-    parser.add_argument('-p', '--preset', default='medium', help=('X264 preset [default: %(default)s].'))
-    parser.add_argument('-q','--crf', type=int, default=23, help=('CRF value [default: %(default)s]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. CRF values should be in the range of 0 to 51. 0 is lossless (and with the biggest file size), 51 is worst possible quality (with the smallest file size) and 18 is visually lossless. Default value results in a nice quality/size ratio.'))
-    parser.add_argument('-r', '--replace-original-video-file', action='store_true', default=False, dest='replace', help=('If set then original video files will be erased after transcoding. WARNING: deleted files can not be easily recovered!'))
-    parser.add_argument('-l','--avlang', default='eng', help=('Default audio language for MKV files obtained (used only if the original stream languages fail to be determined) [default: %(default)s].'))
-    parser.add_argument('-L', '--slang', default='spa', help=('Default subtitle language of soft-subbed subtitles (only used if original subtitle languages fail to be determined) [default: %(default)s].'))
-    parser.add_argument('-x', '--filename-postfix', default='_h264', help=('Postfix to be added to newly created H.264 video files [default: %(default)s].'))
-    parser.add_argument('-t', '--threads', type=int, default=0, help=('Indicates the number of processor cores the script will use. 0 indicates to use as many as possible [default: %(default)s].'))
-    parser.add_argument('-c', '--auto-crop', action='store_true', default=False, help=('Turn on autocrop function. WARNING: Use with caution as some video files has variable width horizontal (and vertical) black bars, in those cases you will probably lose data.')) 
-    parser.add_argument('-v', '--version', action='version', version='3.1.4', help=("Show program's version number and exit.")) # I need to use this explicit help message here (together with setting add_help=False when creating the parser) to be able to proper translate the version help message (when required). All other messages are translated OK, but not this one. With this edit now everything is OK.
+    parser=argparse.ArgumentParser(description=_("This program transcode video files to H264 and AAC in MKV format. Subtitles, if present, are automatically detected and soft subbed into the corresponding output files."), add_help=False)
+    parser.add_argument('video', nargs='+', help=_('Input video file(s).'))
+    parser.add_argument('-h','--help', action='help', help=_("Show this help message and exit."))
+    parser.add_argument('-p', '--preset', default='medium', help=_('X264 preset [default: %(default)s].'))
+    parser.add_argument('-q','--crf', type=int, default=23, help=_('CRF value [default: %(default)s]. Determines the output video quality. Smaller values gives better qualities and bigger file sizes, bigger values result in less quality and smaller file sizes. CRF values should be in the range of 0 to 51. 0 is lossless (and with the biggest file size), 51 is worst possible quality (with the smallest file size) and 18 is visually lossless. Default value results in a nice quality/size ratio.'))
+    parser.add_argument('-r', '--replace-original-video-file', action='store_true', default=False, dest='replace', help=_('If set then original video files will be erased after transcoding. WARNING: deleted files can not be easily recovered!'))
+    parser.add_argument('-l','--avlang', default='eng', help=_('Default audio language for MKV files obtained (used only if the original stream languages fail to be determined) [default: %(default)s].'))
+    parser.add_argument('-L', '--slang', default='spa', help=_('Default subtitle language of soft-subbed subtitles (only used if original subtitle languages fail to be determined) [default: %(default)s].'))
+    parser.add_argument('-x', '--filename-postfix', default='_h264', help=_('Postfix to be added to newly created H.264 video files [default: %(default)s].'))
+    parser.add_argument('-t', '--threads', type=int, default=0, help=_('Indicates the number of processor cores the script will use. 0 indicates to use as many as possible [default: %(default)s].'))
+    parser.add_argument('-c', '--auto-crop', action='store_true', default=False, help=_('Turn on autocrop function. WARNING: Use with caution as some video files has variable width horizontal (and vertical) black bars, in those cases you will probably lose data.')) 
+    parser.add_argument('-v', '--version', action='version', version='3.2.4', help=_("Show program's version number and exit.")) # I need to use this explicit help message here (together with setting add_help=False when creating the parser) to be able to proper translate the version help message (when required). All other messages are translated OK, but not this one. With this edit now everything is OK.
     
     args=parser.parse_args()
 
     if args.crf < 0 or args.crf > 51:
-        parser.error('CRF values should be in the range of 0 to 51.')
+        parser.error(_('CRF values should be in the range of 0 to 51.'))
         
     if args.threads < 0:
-        parser.error('The number of threads must be 0 or positive.')
+        parser.error(_('The number of threads must be 0 or positive.'))
 
     known_presets = ["ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"]
     if args.preset not in known_presets:
-        parser.error('Unknown preset "{}".\nValid values are:\n\t{}\n'.format(args.preset, '\n\t'.join(known_presets)))
+        parser.error(_('Unknown preset "{}".\nValid values are:\n\t{}\n').format(args.preset, '\n\t'.join(known_presets)))
 
     reporter=Reporter()
     file_counter=0
     for filename in args.video:
         file_counter+=1        
-        print('\n==== Transcoding file {:d}/{:d} ===='.format(file_counter,len(args.video)))
+        print(_('\n==== Transcoding file {:d}/{:d} ====').format(file_counter,len(args.video)))
         video=Video(filename)
         if not video.is_ok():
-            sys.stderr.write("File {} is not a proper video file.\n".format(filename))
+            sys.stderr.write(_("File {} is not a proper video file.\n").format(filename))
             reporter.add_ignored_file(filename)
             continue
         
@@ -467,8 +503,8 @@ def run_script():
         
     final_time=time.time()
     
-    print('Work finished in {}.'.format(print_duration(final_time-initial_time)))
-    print('Exiting OK.')
+    print(_('Work finished in {}.').format(print_duration(final_time-initial_time)))
+    print(_('Exiting OK.'))
     
 ## Running the script
 if __name__ == "__main__":

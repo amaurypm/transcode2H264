@@ -1,0 +1,253 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-07 15:23-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: transcode2H264.py:32
+msgid "usage"
+msgstr ""
+
+#: transcode2H264.py:33
+msgid "positional arguments"
+msgstr ""
+
+#: transcode2H264.py:34
+msgid "optional arguments"
+msgstr ""
+
+#: transcode2H264.py:37
+msgid "error"
+msgstr ""
+
+#: transcode2H264.py:39
+msgid "the following arguments are required"
+msgstr ""
+
+#: transcode2H264.py:41
+msgid "unrecognized arguments"
+msgstr ""
+
+#: transcode2H264.py:43
+msgid "too few arguments"
+msgstr ""
+
+#: transcode2H264.py:46
+msgid "expected one argument"
+msgstr ""
+
+#: transcode2H264.py:145
+msgid "Finding crop dimensions..."
+msgstr ""
+
+#: transcode2H264.py:190
+msgid ""
+"WARNING: Deleting file {} as commanded with -r option.\n"
+"This file won't be easily recovered.\n"
+msgstr ""
+
+#: transcode2H264.py:270 transcode2H264.py:274
+msgid "Removing temporary file '{}'."
+msgstr ""
+
+#: transcode2H264.py:300
+msgid ""
+"\n"
+"==== Transcoding finished ===="
+msgstr ""
+
+#: transcode2H264.py:302
+msgid "== There following files were ignored: =="
+msgstr ""
+
+#: transcode2H264.py:310
+msgid "== There were errors transcoding the files: =="
+msgstr ""
+
+#: transcode2H264.py:317
+msgid "==== Final report ===="
+msgstr ""
+
+#: transcode2H264.py:320 transcode2H264.py:329
+msgid " file"
+msgstr ""
+
+#: transcode2H264.py:323 transcode2H264.py:332
+msgid " files"
+msgstr ""
+
+#: transcode2H264.py:325
+msgid " transcoded OK.\n"
+msgstr ""
+
+#: transcode2H264.py:334
+msgid " with errors.\n"
+msgstr ""
+
+#: transcode2H264.py:344
+msgid ""
+"ERROR: ffmpeg is not installed in your system.\n"
+"This script can not work properly without it.\n"
+"\n"
+msgstr ""
+
+#: transcode2H264.py:348
+msgid ""
+"ERROR: mkvtoolnix is not installed in your system.\n"
+"This script can not work properly without it.\n"
+"\n"
+msgstr ""
+
+#: transcode2H264.py:366
+msgid " day "
+msgstr ""
+
+#: transcode2H264.py:369
+msgid " days "
+msgstr ""
+
+#: transcode2H264.py:375
+msgid " hour "
+msgstr ""
+
+#: transcode2H264.py:378
+msgid " hours "
+msgstr ""
+
+#: transcode2H264.py:384
+msgid " minute "
+msgstr ""
+
+#: transcode2H264.py:387
+msgid " minutes "
+msgstr ""
+
+#: transcode2H264.py:393
+msgid " second "
+msgstr ""
+
+#: transcode2H264.py:396
+msgid " seconds "
+msgstr ""
+
+#: transcode2H264.py:455
+msgid ""
+"This program transcode video files to H264 and AAC in MKV format. Subtitles, "
+"if present, are automatically detected and soft subbed into the "
+"corresponding output files."
+msgstr ""
+
+#: transcode2H264.py:456
+msgid "Input video file(s)."
+msgstr ""
+
+#: transcode2H264.py:457
+msgid "Show this help message and exit."
+msgstr ""
+
+#: transcode2H264.py:458
+#, python-format
+msgid "X264 preset [default: %(default)s]."
+msgstr ""
+
+#: transcode2H264.py:459
+#, python-format
+msgid ""
+"CRF value [default: %(default)s]. Determines the output video quality. "
+"Smaller values gives better qualities and bigger file sizes, bigger values "
+"result in less quality and smaller file sizes. CRF values should be in the "
+"range of 0 to 51. 0 is lossless (and with the biggest file size), 51 is "
+"worst possible quality (with the smallest file size) and 18 is visually "
+"lossless. Default value results in a nice quality/size ratio."
+msgstr ""
+
+#: transcode2H264.py:460
+msgid ""
+"If set then original video files will be erased after transcoding. WARNING: "
+"deleted files can not be easily recovered!"
+msgstr ""
+
+#: transcode2H264.py:461
+#, python-format
+msgid ""
+"Default audio language for MKV files obtained (used only if the original "
+"stream languages fail to be determined) [default: %(default)s]."
+msgstr ""
+
+#: transcode2H264.py:462
+#, python-format
+msgid ""
+"Default subtitle language of soft-subbed subtitles (only used if original "
+"subtitle languages fail to be determined) [default: %(default)s]."
+msgstr ""
+
+#: transcode2H264.py:463
+#, python-format
+msgid ""
+"Postfix to be added to newly created H.264 video files [default: "
+"%(default)s]."
+msgstr ""
+
+#: transcode2H264.py:464
+#, python-format
+msgid ""
+"Indicates the number of processor cores the script will use. 0 indicates to "
+"use as many as possible [default: %(default)s]."
+msgstr ""
+
+#: transcode2H264.py:465
+msgid ""
+"Turn on autocrop function. WARNING: Use with caution as some video files has "
+"variable width horizontal (and vertical) black bars, in those cases you will "
+"probably lose data."
+msgstr ""
+
+#: transcode2H264.py:466
+msgid "Show program's version number and exit."
+msgstr ""
+
+#: transcode2H264.py:471
+msgid "CRF values should be in the range of 0 to 51."
+msgstr ""
+
+#: transcode2H264.py:474
+msgid "The number of threads must be 0 or positive."
+msgstr ""
+
+#: transcode2H264.py:478
+msgid ""
+"Unknown preset \"{}\".\n"
+"Valid values are:\n"
+"\t{}\n"
+msgstr ""
+
+#: transcode2H264.py:484
+msgid ""
+"\n"
+"==== Transcoding file {:d}/{:d} ===="
+msgstr ""
+
+#: transcode2H264.py:487
+msgid "File {} is not a proper video file.\n"
+msgstr ""
+
+#: transcode2H264.py:506
+msgid "Work finished in {}."
+msgstr ""
+
+#: transcode2H264.py:507
+msgid "Exiting OK."
+msgstr ""
