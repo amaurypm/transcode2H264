@@ -178,7 +178,7 @@ class Video:
             if self.__crop_data:
                 cmd_line+=' -vf crop={}'.format(self.__crop_data)
                 
-            cmd_line+=' -acodec aac -ar 48k -ab 192k -strict experimental -sn -threads {:d} -y \"{}\"'.format(self.__threads, self.__ffmpeg_output)
+            cmd_line+=' -acodec aac -ar 48k -ab 192k -strict experimental -max_muxing_queue_size 9999 -sn -threads {:d} -y \"{}\"'.format(self.__threads, self.__ffmpeg_output)
             sys.stdout.write('> {}\n'.format(cmd_line))
             exit_code=os.system(cmd_line)
             
